@@ -1,0 +1,4 @@
+name: chu-redemption-spike
+description: A minimal AWS TypeScript Pulumi program
+runtime: nodejs
+config: config/
