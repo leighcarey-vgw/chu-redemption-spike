@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import styles from './App.module.scss';
+import { FizzBuzz } from './fizzbuzz/FizzBuzz';
 
 function App() {
+  const init = false;
+  const [count, setCount] = React.useState(0);
+  const addItem = () => setCount(count => count + 1);
+
   return (
-    <div className={styles.app}>
-      <header className={styles.appHeader}>
-        <img src={logo} className={styles.appLogo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className={styles.appLink}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <section className={[styles.appContainer, styles.clearfix, init ? styles.init : ''].join(' ')}>
+        { createComponents(count) }
+        <div className={styles.nextItem}>
+          <button className={styles.selectNew} onClick={addItem}>&#65291;</button>
+        </div>
+      </section>
   );
+}
+
+function createComponents(count: number) {
+  const components = [];
+  for (let i = 0; i < count; ++i) {
+    components.push(
+        <FizzBuzz key={i} index={i + 1} />
+    );
+  }
+  return components;
 }
 
 export default App;

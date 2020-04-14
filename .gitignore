@@ -3,6 +3,8 @@
 node_modules
 npm-debug.log*
 
+shared/dist
+
 server/dist
 
 client/build

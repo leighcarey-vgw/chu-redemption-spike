@@ -1,38 +1,24 @@
-.app {
-  text-align: center;
-}
+@import "./mixins";
 
-.appLogo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.nextItem {
+  @extend %item;
 
-@media (prefers-reduced-motion: no-preference) {
-  .appLogo {
-    animation: App-logo-spin infinite 20s linear;
+  &:hover {
+    border-color: white;
   }
-}
 
-.appHeader {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  > button {
+    border: 2px dashed $de-em;
+    background: none;
+    color: $de-em;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+    width: 100%;
+    line-height: $item-width;
 
-.appLink {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+    &:hover {
+      color: white;
+    }
   }
 }

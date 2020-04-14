@@ -1,9 +1,14 @@
 {
     "compilerOptions": {
         "strict": true,
-        "target": "es2018",
-        "lib": ["es2018"],
+        "target": "es5",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
         "outDir": "dist",
+        "declaration": true,
         "module": "commonjs",
         "sourceMap": true,
         "experimentalDecorators": true,

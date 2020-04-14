@@ -1,8 +1,9 @@
 {
-  "name": "chu-redemption-spike-client",
+  "name": "@chu-redemption-spike/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chu-redemption-spike/shared": "file:../shared",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -10,9 +11,11 @@
     "@types/node": "^12.12.35",
     "@types/react": "^16.9.33",
     "@types/react-dom": "^16.9.6",
+    "http-schemas": "^0.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "rxjs": "^6.5.5",
     "typescript": "^3.7.5"
   },
   "scripts": {

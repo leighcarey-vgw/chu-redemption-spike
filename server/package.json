@@ -1,17 +1,22 @@
 {
-  "name": "chu-redemption-spike-server",
+  "name": "@chu-redemption-spike/server",
   "version": "0.0.1",
   "private": true,
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "start": "node ."
   },
   "devDependencies": {
-    "@types/express": "^4.17.6"
+    "@types/compression": "^1.7.0",
+    "@types/express": "^4.17.6",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "@chu-redemption-spike/shared": "file:../shared",
+    "compression": "^1.7.4",
     "express": "^4.17.1",
+    "http-schemas": "^0.4.3",
     "typescript": "^3.8.3"
   }
 }

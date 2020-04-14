@@ -1,7 +1,14 @@
 {
     "name": "chu-redemption-spike",
+    "scripts": {
+        "build-client": "cd client && npm run build",
+        "build-server": "cd server && npm run build",
+        "build-shared": "cd shared && npm run build",
+        "build": "npm run build-shared && concurrently \"npm:build-server\" \"npm:build-client\""
+    },
     "devDependencies": {
-        "@types/node": "^8.0.0"
+        "@types/node": "^8.0.0",
+        "concurrently": "^5.1.0"
     },
     "dependencies": {
         "@lib-server/fargate-service": "^2.0.0",
