@@ -28,6 +28,6 @@ COPY server/package.json ./
 COPY --from=build /usr/local/chu-redemption-spike/server/dist/ dist/
 COPY --from=build /usr/local/chu-redemption-spike/server/node_modules/ node_modules/
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD [ "npm", "start" ]

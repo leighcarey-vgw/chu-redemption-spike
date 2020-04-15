@@ -6,7 +6,7 @@ import { createFizzBuzzDomain } from "./fizzbuzz/domain";
 const fizzBuzzDomain = createFizzBuzzDomain();
 
 const app = express();
-const port = 80;
+const port = 8080;
 
 app.use(compression());
 setupFizzBuzzRoutes(app, fizzBuzzDomain);
