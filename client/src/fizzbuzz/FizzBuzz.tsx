@@ -20,7 +20,7 @@ export class FizzBuzz extends React.Component<Props, State> {
             const result = await fizzBuzzClient.get("/api/fizzbuzz/:i", {
                 params: { i: String(this.props.index) }
             });
-            this.setState({ result } as any);
+            this.setState({ result });
         } catch (e) {
             this.setState({ error: e.message });
         }
