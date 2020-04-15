@@ -4,7 +4,7 @@ import * as awsx from "@pulumi/awsx";
 const loadBalancer = new awsx.lb.ApplicationLoadBalancer("chu-redemption-spike");
 const listener = loadBalancer.createListener("alb-listener", { port: 80 });
 
-const apiTargetGroup = loadBalancer.createTargetGroup("api-target-group", { port: 8080 });
+const apiTargetGroup = loadBalancer.createTargetGroup("api-target-group", { port: 80 });
 listener.addListenerRule("api-routing", {
     conditions: [{
         pathPattern: {
