@@ -30,6 +30,16 @@ $borderWidth: 0.2rem;
     box-shadow: 2px 2px 5px #000;
   }
 
+  &.error {
+    $errorColour: #cf2002;
+
+    color: $errorColour;
+    .front,
+    .back {
+      border-color: $errorColour;
+    }
+  }
+
   .back {
     background: #363636;
     transform: rotateY( 180deg );

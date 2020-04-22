@@ -13,7 +13,7 @@ const getResults = async (index: number) => {
         return await fizzBuzzClient.get("/api/fizzbuzz/:i", { params });
     } catch (e) {
         console.log(`Error fetching result for index ${index}`, e.message);
-        return e.response ? e.response.status : e.message;
+        throw new Error(e.response ? e.response.status : e.message);
     }
 };
 
@@ -22,7 +22,7 @@ export const FizzBuzz: FunctionComponent<Props> = ({ index }) => {
     // Define component state
     const [flipped, setFlipped] = useState(false);
     const [result, setResult] = useState<fizzbuzz.FizzBuzzType>();
-    const [error, setError] = useState<string>();
+    const [error, setError] = useState<Error>();
 
     // Do something when `result` changes
     useEffect(() => {
@@ -42,8 +42,8 @@ export const FizzBuzz: FunctionComponent<Props> = ({ index }) => {
     }, [flipped, index]);
 
     const reveal = () => setFlipped(true);
-    const getCardClassName = () => styles.card + (flipped ? ` ${styles.flipped}` : '');
-    const getContent = () => result === "fizzbuzz" ? "fizz buzz" : result;
+    const getCardClassName = () => styles.card + (flipped ? ` ${styles.flipped}` : '') + (error ? ` ${styles.error}` : '');
+    const getContent = () => error?.message || (result === "fizzbuzz" ? "fizz buzz" : result);
     return (
         <div className={styles.item}>
             <div className={getCardClassName()}>
