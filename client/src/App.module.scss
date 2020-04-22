@@ -8,14 +8,17 @@
   }
 
   > button {
-    border: 2px dashed $de-em;
+    $borderWidth: 0.2rem;
+
+    border: $borderWidth dashed $de-em;
     background: none;
     color: $de-em;
+    outline: none;
     cursor: pointer;
     font-size: inherit;
     padding: 0;
     width: 100%;
-    line-height: $item-width;
+    line-height: $item-width - 2 * $borderWidth;
 
     &:hover {
       color: white;

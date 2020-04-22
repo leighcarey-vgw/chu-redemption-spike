@@ -19,35 +19,42 @@ const getResults = async (index: number) => {
 
 type Props = { index: number };
 export const FizzBuzz: FunctionComponent<Props> = ({ index }) => {
+    // Define component state
+    const [flipped, setFlipped] = useState(false);
     const [result, setResult] = useState<fizzbuzz.FizzBuzzType>();
     const [error, setError] = useState<string>();
 
-    const getCardClassName = () => {
-        let className = styles.card;
-        if (result) {
-            className += " " + styles.flipped;
+    // Do something when `result` changes
+    useEffect(() => {
+        console.log(`Value for card ${index} is ${result}`); // Do some logging
+    }, [result, index]);
+
+    // Do something when `flipped` changes
+    useEffect(() => {
+        console.log(`Card ${index} ${flipped ? 'is' : 'is not'} flipped`); // Do some logging
+        if (flipped) {
+            getResults(index)           // Fetch the result
+            .then(setResult, setError)  // Update our state
+        } else {
+            setResult(undefined);       // Update our state
+            setError(undefined);        // Ditto
         }
-        return className;
-    };
+    }, [flipped, index]);
 
-    const getContent = () => {
-        return result === "fizzbuzz"
-               ? "fizz buzz"
-               : result;
-    };
-
-    useEffect(() => { getResults(index).then(setResult, setError) }, [index]);
-
+    const reveal = () => setFlipped(true);
+    const getCardClassName = () => styles.card + (flipped ? ` ${styles.flipped}` : '');
+    const getContent = () => result === "fizzbuzz" ? "fizz buzz" : result;
     return (
         <div className={styles.item}>
             <div className={getCardClassName()}>
                 <div className={styles.front}>
-                    <img className={styles.spinner} src={loading} alt="loading"/>
+                    <button className={styles.revealBtn} onClick={reveal}>↻</button>
                 </div>
                 <div className={styles.back}>
-                    <span className={styles.content}>
-                        { getContent() }
-                    </span>
+                { getContent()
+                  ? <span className={styles.content}>{ getContent() }</span>
+                  : <img className={styles.spinner} src={loading} alt="loading"/>
+                }
                 </div>
             </div>
         </div>
