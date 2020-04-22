@@ -1,10 +1,11 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState } from "react";
-import { fizzbuzz } from "@chu-redemption-spike/shared";
-import { createHttpClient } from "http-schemas/client";
-
 import styles from "./FizzBuzz.module.scss";
 import loading from './loading.png';
+
+import { fizzbuzz } from "@chu-redemption-spike/shared";
+import { createHttpClient } from "http-schemas/client";
+import { getCardClassName, getContent } from "./fizzbuzz.util";
 
 const fizzBuzzClient = createHttpClient(fizzbuzz.schema);
 const getResults = async (index: number) => {
@@ -42,17 +43,16 @@ export const FizzBuzz: FunctionComponent<Props> = ({ index }) => {
     }, [flipped, index]);
 
     const reveal = () => setFlipped(true);
-    const getCardClassName = () => styles.card + (flipped ? ` ${styles.flipped}` : '') + (error ? ` ${styles.error}` : '');
-    const getContent = () => error?.message || (result === "fizzbuzz" ? "fizz buzz" : result);
+    const content = getContent(error || result);
     return (
         <div className={styles.item}>
-            <div className={getCardClassName()}>
+            <div className={getCardClassName(flipped, error)}>
                 <div className={styles.front}>
                     <button className={styles.revealBtn} onClick={reveal}>↻</button>
                 </div>
                 <div className={styles.back}>
-                { getContent()
-                  ? <span className={styles.content}>{ getContent() }</span>
+                { content
+                  ? <span className={styles.content}>{ content }</span>
                   : <img className={styles.spinner} src={loading} alt="loading"/>
                 }
                 </div>
