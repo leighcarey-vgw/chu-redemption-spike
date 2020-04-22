@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const params = new URLSearchParams(window.location.search);
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App useRx={Boolean(params.get("rx"))}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
