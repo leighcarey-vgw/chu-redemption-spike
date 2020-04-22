@@ -1,61 +1,55 @@
 import * as React from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { fizzbuzz } from "@chu-redemption-spike/shared";
 import { createHttpClient } from "http-schemas/client";
 
 import styles from "./FizzBuzz.module.scss";
 import loading from './loading.png';
 
-type Props = { index: number };
-type State = {
-    result?: fizzbuzz.FizzBuzzType,
-    error?: string
-}
-
 const fizzBuzzClient = createHttpClient(fizzbuzz.schema);
-
-export class FizzBuzz extends React.Component<Props, State> {
-
-    async componentDidMount(): Promise<void> {
-        try {
-            const result = await fizzBuzzClient.get("/api/fizzbuzz/:i", {
-                params: { i: String(this.props.index) }
-            });
-            this.setState({ result });
-        } catch (e) {
-            this.setState({ error: e.message });
-        }
+const getResults = async (index: number) => {
+    try {
+        const params = { i: String(index) };
+        return await fizzBuzzClient.get("/api/fizzbuzz/:i", { params });
+    } catch (e) {
+        console.log(`Error fetching result for index ${index}`, e.message);
+        return e.response ? e.response.status : e.message;
     }
+};
 
-    render() {
-        return (
-            <div className={styles.item}>
-                <div className={this.getCardClassName()}>
-                    <div className={styles.front}>
-                        <img className={styles.spinner} src={loading} alt="loading"/>
-                    </div>
-                    <div className={styles.back}>
-                        <span className={styles.content}>
-                            { this.getContent() }
-                        </span>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+type Props = { index: number };
+export const FizzBuzz: FunctionComponent<Props> = ({ index }) => {
+    const [result, setResult] = useState<fizzbuzz.FizzBuzzType>();
+    const [error, setError] = useState<string>();
 
-    private getCardClassName() {
+    const getCardClassName = () => {
         let className = styles.card;
-        if (this.state && this.state.result) {
+        if (result) {
             className += " " + styles.flipped;
         }
         return className;
-    }
+    };
 
-    private getContent() {
-        if (this.state) {
-            return this.state.result === "fizzbuzz"
-                   ? "fizz buzz"
-                   : this.state.result;
-        }
-    }
-}
+    const getContent = () => {
+        return result === "fizzbuzz"
+               ? "fizz buzz"
+               : result;
+    };
+
+    useEffect(() => { getResults(index).then(setResult, setError) }, [index]);
+
+    return (
+        <div className={styles.item}>
+            <div className={getCardClassName()}>
+                <div className={styles.front}>
+                    <img className={styles.spinner} src={loading} alt="loading"/>
+                </div>
+                <div className={styles.back}>
+                    <span className={styles.content}>
+                        { getContent() }
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+};
